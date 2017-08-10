@@ -1,13 +1,30 @@
+from random import randint
+
+
 def heal(gladiator):
-    return 'it works'
+    if (gladiator['health'] < 100) and (gladiator['rage'] >= 10):
+        gladiator['health'] += 5
+        gladiator['rage'] -= 10
+        if gladiator['health'] > 100:
+            gladiator['health'] == 100
+            return gladiator
+        return gladiator
+    elif gladiator['rage'] < 10:
+        message = 'NOT ENOUGH RAGE!!'
+        return message
+    else:
+        message = 'MAX HEALTH!!'
+        return message
 
 
 def is_dead(gladiator):
-    return 'it works'
+    if gladiator['health'] <= 0:
+        return True
+    return False
 
 
 def attack(attacker, defender):
-    return 'it works'
+    return None
 
 
 def new_gladiator(health, rage, damage_low, damage_high):
