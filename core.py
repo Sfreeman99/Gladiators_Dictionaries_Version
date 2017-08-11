@@ -27,14 +27,17 @@ def attack(attacker, defender):
     if randint(1, 100) <= attacker['rage']:
         defender['health'] -= (2 * attack)
         attacker['rage'] = 0
+        message = 'Critical Hit of {} damage'.format(attack)
     else:
         defender['health'] -= attack
         attacker['rage'] += 15
-    return attacker, defender
+        message = 'You hit of {} damage'.format(attack)
+    return message
 
 
-def new_gladiator(health, rage, damage_low, damage_high):
+def new_gladiator(health, rage, damage_low, damage_high, name):
     return {
+        'name': name,
         'health': health,
         'rage': rage,
         'damage low': damage_low,
