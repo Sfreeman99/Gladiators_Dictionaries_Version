@@ -67,12 +67,7 @@ def test_heal_with_less_than_100():
         'rage': 20,
         'damage low': 10,
         'damage high': 15
-    }) == {
-        'health': 95,
-        'rage': 10,
-        'damage low': 10,
-        'damage high': 15
-    }
+    }) == 'Success'
 
 
 def test_heal_with_100():
@@ -81,7 +76,7 @@ def test_heal_with_100():
         'rage': 20,
         'damage low': 10,
         'damage high': 15
-    }) == 'MAX HEALTH!!'
+    }) == 'Full Health'
 
 
 def test_heal_with_not_enough_rage():
@@ -90,18 +85,43 @@ def test_heal_with_not_enough_rage():
         'rage': 5,
         'damage low': 10,
         'damage high': 15
-    }) == 'NOT ENOUGH RAGE!!'
+    }) == 'Insufficient Rage'
 
 
 def test_heal_with_99_health():
-    core.heal({
-        'health': 99,
-        'rage': 20,
-        'damage low': 10,
-        'damage high': 15
-    }) == {
-        'health': 106,
-        'rage': 10,
-        'damage low': 10,
-        'damage high': 15
+    glad = {'health': 99, 'rage': 20, 'damage low': 10, 'damage high': 15}
+    core.heal(glad)
+    assert glad['health'] == 100
+    assert glad['rage'] == 10
+
+
+def test_heal_with_96_health():
+    glad = {'health': 96, 'rage': 20, 'damage low': 10, 'damage high': 15}
+    core.heal(glad)
+    assert glad['health'] != 101
+    assert glad['rage'] == 10
+
+
+def test_regular_attack():
+    attacker = {'health': 100, 'rage': 0, 'damage low': 20, 'damage high': 20}
+    defender = {'health': 100, 'rage': 1, 'damage low': 1, 'damage high': 1}
+    attacker, defender = core.attack(attacker, defender)
+    assert defender['health'] == 80
+    assert attacker['rage'] == 15
+    attacker = {
+        'health': 100,
+        'rage': 100,
+        'damage low': 20,
+        'damage high': 20
     }
+    defender = {'health': 100, 'rage': 1, 'damage low': 1, 'damage high': 1}
+    attacker, defender = core.attack(attacker, defender)
+    assert defender['health'] == 60
+    assert attacker['rage'] == 0
+    attacker = {'health': 80, 'rage': 50, 'damage low': 10, 'damage high': 20}
+    defender = {'health': 80, 'rage': 1, 'damage low': 1, 'damage high': 1}
+    start_rage = attacker['rage']
+    start_health = defender['health']
+    attacker, defender = core.attack(attacker, defender)
+    assert defender['health'] < start_health
+    assert attacker['rage'] == 65 or attacker['rage'] == 0
