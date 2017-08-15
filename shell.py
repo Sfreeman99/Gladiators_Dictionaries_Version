@@ -19,13 +19,14 @@ def battle(attacker, defender):
             '{}\n----------\n[A]ttack\n[H]eal\n[S]uper Heal\n----------\n>>> '.
             format(attacker['name'])).upper().strip()
         if decision == 'A':
-            return core.attack(attacker, defender)
-            return '{} is {}\n'.format(attacker['name'], attacker['attacking'])
+            attack = core.attack(attacker, defender)
+            return '{}: \n{}\n'.format(attacker['name'], attack)
         elif decision == 'H':
-            return core.heal(attacker)
-            return '{} is {}\n'.format(attacker['name'], attacker['healing'])
+            heal = core.heal(attacker)
+            return '{}: \n{}\n'.format(attacker['name'], heal)
         elif decision == 'S':
-            return core.super_heal(attacker)
+            s_heal = core.super_heal(attacker)
+            return '{}: \n{}\n'.format(attacker['name'], s_heal)
 
         else:
             print('INVALID CHOICE... TRY AGAIN')
