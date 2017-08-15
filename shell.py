@@ -15,13 +15,17 @@ def slow_type(t):
 
 def battle(attacker, defender):
     while True:
-        decision_2 = input(
-            '{}\n----------\n[A]ttack\n[H]eal\n----------\n>>> '.format(
-                attacker['name'])).upper().strip()
-        if decision_2 == 'A':
+        decision = input(
+            '{}\n----------\n[A]ttack\n[H]eal\n[S]uper Heal\n----------\n>>> '.
+            format(attacker['name'])).upper().strip()
+        if decision == 'A':
             return core.attack(attacker, defender)
-        elif decision_2 == 'H':
+            return '{} is {}\n'.format(attacker['name'], attacker['attacking'])
+        elif decision == 'H':
             return core.heal(attacker)
+            return '{} is {}\n'.format(attacker['name'], attacker['healing'])
+        elif decision == 'S':
+            return core.super_heal(attacker)
 
         else:
             print('INVALID CHOICE... TRY AGAIN')
@@ -70,22 +74,24 @@ def main():
     introduce_gladiator(gladiator_1)
     introduce_gladiator(gladiator_2)
     sleep(1)
+    slow_type('READY...'.center(100))
+    sleep(1)
+    print('FIGHT!!'.center(100))
 
     while True:
         print(game_play(gladiator_1, gladiator_2))
+
         print(battle(gladiator_1, gladiator_2))
         sleep(1)
-        if core.is_dead(gladiator_2) == True:
-            print(game_play(gladiator_1, gladiator_2))
-            winners_and_losers(gladiator_2, gladiator_1)
-            exit()
-
         print(game_play(gladiator_1, gladiator_2))
+        winners_and_losers(gladiator_2, gladiator_1)
+        if core.is_dead(gladiator_2):
+            exit()
         print(battle(gladiator_2, gladiator_1))
         sleep(1)
-        if core.is_dead(gladiator_1) == True:
-            print(game_play(gladiator_1, gladiator_2))
-            winners_and_losers(gladiator_1, gladiator_2)
+        print(game_play(gladiator_1, gladiator_2))
+        winners_and_losers(gladiator_1, gladiator_2)
+        if core.is_dead(gladiator_1):
             exit()
 
 

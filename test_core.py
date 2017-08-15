@@ -2,41 +2,71 @@ import core
 
 
 def test_new_gladiator():
-    assert core.new_gladiator(15, 0, 1, 5) == {
+    assert core.new_gladiator(15, 0, 1, 5, 'bloop') == {
+        'name': 'bloop',
         'health': 15,
         'rage': 0,
         'damage low': 1,
-        'damage high': 5
+        'damage high': 5,
+        'blocking': 'blocking',
+        'dodging': 'dodging',
+        'healing': 'healing',
+        'attacking': 'attacking'
     }
-    assert core.new_gladiator(100, 100, 0, 0) == {
+    assert core.new_gladiator(100, 100, 0, 0, 'bloop') == {
+        'name': 'bloop',
         'health': 100,
         'rage': 100,
         'damage low': 0,
-        'damage high': 0
+        'damage high': 0,
+        'blocking': 'blocking',
+        'dodging': 'dodging',
+        'healing': 'healing',
+        'attacking': 'attacking'
     }
-    assert core.new_gladiator(100, 0, 0, 0) == {
+    assert core.new_gladiator(100, 0, 0, 0, 'bloop') == {
+        'name': 'bloop',
         'health': 100,
         'rage': 0,
         'damage low': 0,
-        'damage high': 0
+        'damage high': 0,
+        'blocking': 'blocking',
+        'dodging': 'dodging',
+        'healing': 'healing',
+        'attacking': 'attacking'
     }
-    assert core.new_gladiator(0, 100, 0, 0) == {
+    assert core.new_gladiator(0, 100, 0, 0, 'bloop') == {
+        'name': 'bloop',
         'health': 0,
         'rage': 100,
         'damage low': 0,
-        'damage high': 0
+        'damage high': 0,
+        'blocking': 'blocking',
+        'dodging': 'dodging',
+        'healing': 'healing',
+        'attacking': 'attacking'
     }
-    assert core.new_gladiator(0, 0, 100, 0) == {
+    assert core.new_gladiator(0, 0, 100, 0, 'bloop') == {
+        'name': 'bloop',
         'health': 0,
         'rage': 0,
         'damage low': 100,
-        'damage high': 0
+        'damage high': 0,
+        'blocking': 'blocking',
+        'dodging': 'dodging',
+        'healing': 'healing',
+        'attacking': 'attacking'
     }
-    assert core.new_gladiator(0, 0, 0, 100) == {
+    assert core.new_gladiator(0, 0, 0, 100, 'bloop') == {
+        'name': 'bloop',
         'health': 0,
         'rage': 0,
         'damage low': 0,
-        'damage high': 100
+        'damage high': 100,
+        'blocking': 'blocking',
+        'dodging': 'dodging',
+        'healing': 'healing',
+        'attacking': 'attacking'
     }
 
 
@@ -105,7 +135,7 @@ def test_heal_with_96_health():
 def test_regular_attack():
     attacker = {'health': 100, 'rage': 0, 'damage low': 20, 'damage high': 20}
     defender = {'health': 100, 'rage': 1, 'damage low': 1, 'damage high': 1}
-    attacker, defender = core.attack(attacker, defender)
+    core.attack(attacker, defender)
     assert defender['health'] == 80
     assert attacker['rage'] == 15
     attacker = {
@@ -115,13 +145,13 @@ def test_regular_attack():
         'damage high': 20
     }
     defender = {'health': 100, 'rage': 1, 'damage low': 1, 'damage high': 1}
-    attacker, defender = core.attack(attacker, defender)
+    core.attack(attacker, defender)
     assert defender['health'] == 60
     assert attacker['rage'] == 0
     attacker = {'health': 80, 'rage': 50, 'damage low': 10, 'damage high': 20}
     defender = {'health': 80, 'rage': 1, 'damage low': 1, 'damage high': 1}
     start_rage = attacker['rage']
     start_health = defender['health']
-    attacker, defender = core.attack(attacker, defender)
+    core.attack(attacker, defender)
     assert defender['health'] < start_health
     assert attacker['rage'] == 65 or attacker['rage'] == 0
