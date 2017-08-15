@@ -1,4 +1,4 @@
-from random import randint, choice
+import random
 import time
 
 
@@ -24,8 +24,8 @@ def is_dead(gladiator):
 
 
 def attack(attacker, defender):
-    attack = randint(attacker['damage low'], attacker['damage high'])
-    if randint(1, 100) <= attacker['rage']:
+    attack = random.randint(attacker['damage low'], attacker['damage high'])
+    if random.randint(1, 100) <= attacker['rage']:
         defender['health'] -= (2 * attack)
         attacker['rage'] = 0
         message = 'Critical Hit of {} damage'.format(attack)
@@ -51,14 +51,18 @@ def new_gladiator(health, rage, damage_low, damage_high, name):
 
 
 def dodge_attack(defender, attacker, previous_attack):
-    dodge = choice(['a', 's', 'd', 'w'])
-    decision = input(
-        'W = Up; S = Down; D = Left; A = Right\n Which way would you like to dodge?\n>>>'
-    ).lower()
-    if decision == dodge:
-        defender['health'] += attack
-    else:
-        defender['health'] -= attack
+    # has to be able to dodge 4 times 
+    phrases = [
+        'He is attacking from the left',
+        'He is attacking from the right',
+        'He is attacking from above',
+        'He is attacking from below'
+    ]
+    
+    # if the attacker misses its plus one
+    #if he doesnt miss its minus one
+    # has to get atleast 4 dodges for attack to miss
+    # has 6 chances
 
 
 def super_heal(gladiator):
@@ -70,8 +74,9 @@ def super_heal(gladiator):
         'You WiLl NeVeRR GeT SupER HEaL',
         'YoU WiLl LoSe HeaLtH iF yoU do Not TypE ThiS fAsT EnoUgH',
         'You got lucky because this is an easy One',
+        '
     ]
-    password = choice(phrases)
+    password = random.choice(phrases)
     print(password)
     start = time.time()
     passkey = input()
