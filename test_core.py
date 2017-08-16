@@ -1,4 +1,5 @@
 import core
+import random
 
 
 def test_new_gladiator():
@@ -8,8 +9,8 @@ def test_new_gladiator():
         'rage': 0,
         'damage low': 1,
         'damage high': 5,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
@@ -19,8 +20,8 @@ def test_new_gladiator():
         'rage': 100,
         'damage low': 0,
         'damage high': 0,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
@@ -30,8 +31,8 @@ def test_new_gladiator():
         'rage': 0,
         'damage low': 0,
         'damage high': 0,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
@@ -41,8 +42,8 @@ def test_new_gladiator():
         'rage': 100,
         'damage low': 0,
         'damage high': 0,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
@@ -52,8 +53,8 @@ def test_new_gladiator():
         'rage': 0,
         'damage low': 100,
         'damage high': 0,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
@@ -63,8 +64,8 @@ def test_new_gladiator():
         'rage': 0,
         'damage low': 0,
         'damage high': 100,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
@@ -155,3 +156,51 @@ def test_regular_attack():
     core.attack(attacker, defender)
     assert defender['health'] < start_health
     assert attacker['rage'] == 65 or attacker['rage'] == 0
+
+
+def test_super_heal():
+    gladiator = {
+        'health': 70,
+        'rage': 100,
+        'damage low': 20,
+        'damage high': 20
+    }
+    phrases = [
+        'This is super heal', 'Type this fast enough and you get super heal',
+        'YOu GoT tO bE qUiCkeR ThaN ThAT', 'You WiLl NeVeRR GeT SupER HEaL',
+        'YoU WiLl LoSe HeaLtH iF yoU do Not TypE ThiS fAsT EnoUgH',
+        'You got lucky because this is an easy One',
+        'How Much Wood Can A Wood Chuck CHUCK'
+    ]
+    assert core.super_heal(gladiator) in phrases
+    gladiator = {'health': 70, 'rage': 29, 'damage low': 20, 'damage high': 20}
+    assert core.super_heal(gladiator) == 'Not enough Rage...'
+
+
+def test_checking_of_super_heal():
+    gladiator = {
+        'health': 70,
+        'rage': 100,
+        'damage low': 20,
+        'damage high': 20
+    }
+
+    password = 'This is super heal'
+    print(password)
+    start = 10
+    passkey = 'This is super heal'
+    end = 21
+    core.check_superheal(passkey, password, start, end, gladiator)
+    assert gladiator['health'] == 60
+    gladiator = {
+        'health': 60,
+        'rage': 100,
+        'damage low': 20,
+        'damage high': 20
+    }
+    password = 'This is super heal'
+    passkey = 'This is Super heal'
+    start = 10
+    end = 20
+    core.check_superheal(passkey, password, start, end, gladiator)
+    assert gladiator['health'] == 50

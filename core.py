@@ -43,22 +43,41 @@ def new_gladiator(health, rage, damage_low, damage_high, name):
         'rage': rage,
         'damage low': damage_low,
         'damage high': damage_high,
-        'blocking': 'blocking',
-        'dodging': 'dodging',
+        'blocking': False,
+        'dodging': False,
         'healing': 'healing',
         'attacking': 'attacking'
     }
 
 
-def dodge_attack(defender, attacker, previous_attack):
-    # has to be able to dodge 4 times 
-    phrases = [
-        'He is attacking from the left',
-        'He is attacking from the right',
-        'He is attacking from above',
-        'He is attacking from below'
-    ]
-    
+def dodge_attack(defender):
+    # has to be able to dodge 4 times
+    phrases = {
+        'd': 'He is attacking from the left',
+        'a': 'He is attacking from the right',
+        'w': 'He is attacking from below',
+        's': 'He is attacking from above'
+    }
+    pass_amount = 0
+    while pass_amount != 4:
+        choose = random.choice(
+            [phrases['d'], phrases['a'], phrases['w'], phrases['s']])
+        print(choose)
+        decision = phrases[input()]
+        if decision == choose:
+            pass_amount += 1
+            message = 'You dodged the attack!! Get ready for the next one...\n'
+            print(message)
+        else:
+            break
+    if pass_amount == 4:
+        defender['dodge'] = True
+        message = 'You Successfully dodged all four attacks'
+    else:
+        defender['dodge'] = False
+        message = 'You did not dodge!! You lose'
+    return message
+
     # if the attacker misses its plus one
     #if he doesnt miss its minus one
     # has to get atleast 4 dodges for attack to miss
@@ -66,24 +85,25 @@ def dodge_attack(defender, attacker, previous_attack):
 
 
 def super_heal(gladiator):
+    if gladiator['rage'] >= 30:
+        phrases = [
+            'This is super heal',
+            'Type this fast enough and you get super heal',
+            'YOu GoT tO bE qUiCkeR ThaN ThAT',
+            'You WiLl NeVeRR GeT SupER HEaL',
+            'YoU WiLl LoSe HeaLtH iF yoU do Not TypE ThiS fAsT EnoUgH',
+            'You got lucky because this is an easy One',
+            'How Much Wood Can A Wood Chuck CHUCK'
+        ]
+        password = random.choice(phrases)
+        return password
+    else:
+        message = 'Not enough Rage...'
+        return message
 
-    phrases = [
-        'This is super heal',
-        'Type this fast enough and you get super heal',
-        'YOu GoT tO bE qUiCkeR ThaN ThAT',
-        'You WiLl NeVeRR GeT SupER HEaL',
-        'YoU WiLl LoSe HeaLtH iF yoU do Not TypE ThiS fAsT EnoUgH',
-        'You got lucky because this is an easy One',
-        '
-    ]
-    password = random.choice(phrases)
-    print(password)
-    start = time.time()
-    passkey = input()
-    end = time.time()
 
-    if (end - start < 10) and (passkey == password) and (gladiator['rage'] >=
-                                                         30):
+def check_superheal(passkey, password, start, end, gladiator):
+    if (end - start <= 10) and (passkey == password):
         gladiator['rage'] -= 30
         gladiator['health'] += 30
         if gladiator['health'] > 100:

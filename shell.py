@@ -13,6 +13,14 @@ def slow_type(t):
     return print()
 
 
+def shell_superheal(password):
+    print(password)
+    start = time.time()
+    passkey = input()
+    end = time.time()
+    return passkey, start, end
+
+
 def battle(attacker, defender):
     while True:
         decision = input(
@@ -25,7 +33,9 @@ def battle(attacker, defender):
             heal = core.heal(attacker)
             return '{}: \n{}\n'.format(attacker['name'], heal)
         elif decision == 'S':
-            s_heal = core.super_heal(attacker)
+            password = core.super_heal(attacker)
+            passkey, start, end = shell_superheal(password)
+            s_heal = core.check_superheal(passkey, password, start, end)
             return '{}: \n{}\n'.format(attacker['name'], s_heal)
 
         else:
@@ -81,7 +91,8 @@ def main():
 
     while True:
         print(game_play(gladiator_1, gladiator_2))
-
+        # attacker_decision(gladiator_1)
+        # defender_decision(gladiator_2)
         print(battle(gladiator_1, gladiator_2))
         sleep(1)
         print(game_play(gladiator_1, gladiator_2))
@@ -94,6 +105,37 @@ def main():
         winners_and_losers(gladiator_1, gladiator_2)
         if core.is_dead(gladiator_1):
             exit()
+
+
+def attacker_decision(gladiator):
+    while True:
+        decision = input(
+            '{}\n----------\n[A]ttack\n[H]eal\n[S]uper Heal\n----------\n>>> '.
+            format(gladiator['name'])).upper().strip()
+        if decision == 'A':
+            return decision
+        if decision == 'H':
+            return decision
+        if decision == 'S':
+            return decision
+
+        else:
+            print('Invalid Choice... Try again')
+
+
+def defender_decision(gladiator):
+    while True:
+        decision = input(
+            '{}\n----------\n[H]eal\n[S]uper Heal\n[D]odge\n----------\n>>> '.
+            format(gladiator['name'])).upper().strip()
+        if decision == 'H':
+            return decision
+        if decision == 'S':
+            return decision
+        if decision == 'D':
+            return decision
+        else:
+            print('Invalid Choice... Please Try Again')
 
 
 if __name__ == '__main__':
