@@ -21,10 +21,34 @@ def shell_superheal(password):
     return passkey, start, end
 
 
+def shell_dodge(password):
+    phrases = password
+    pass_amount = 0
+    while pass_amount != 4:
+        choose = random.choice(
+            [phrases['d'], phrases['a'], phrases['w'], phrases['s']])
+        print(choose)
+        decision = phrases[input()]
+        if decision == choose:
+            pass_amount += 1
+            message = 'You dodged the attack!! Get ready for the next one...\n'
+            print(message)
+        else:
+            break
+        return pass_amount
+    #     if pass_amount == 4:
+    #     defender['dodge'] = True
+    #     message = 'You Successfully dodged all four attacks'
+    # else:
+    #     defender['dodge'] = False
+    #     message = 'You did not dodge!! You lose'
+    # return message
+
+
 def battle(attacker, defender):
     while True:
         decision = input(
-            '{}\n----------\n[A]ttack\n[H]eal\n[S]uper Heal\n----------\n>>> '.
+            '{}\n----------\n[A]ttack\n[H]eal\n[S]uper Heal\n[D]odge\n----------\n>>> '.
             format(attacker['name'])).upper().strip()
         if decision == 'A':
             attack = core.attack(attacker, defender)
@@ -34,9 +58,23 @@ def battle(attacker, defender):
             return '{}: \n{}\n'.format(attacker['name'], heal)
         elif decision == 'S':
             password = core.super_heal(attacker)
-            passkey, start, end = shell_superheal(password)
-            s_heal = core.check_superheal(passkey, password, start, end)
-            return '{}: \n{}\n'.format(attacker['name'], s_heal)
+            if password == 'Not enough Rage...':
+                return 'Not enough Rage... You lose a turn'
+            else:
+                passkey, start, end = shell_superheal(password)
+                s_heal = core.check_superheal(passkey, password, start, end)
+                return '{}: \n{}\n'.format(attacker['name'], s_heal)
+        elif decision == 'D':
+            password = core.dodge_attack(defender)
+            if password == False:
+                return 'Not enough Rage... You lose a turn'
+            else:
+                pass_amount = shell_dodge(password)
+                passer = core.check_dodge_attack(pass_amount, defender)
+                if passer == 'You Successfully dodged all four attacks':
+                    print('it is good')
+                else:
+                    print('Not good')
 
         else:
             print('INVALID CHOICE... TRY AGAIN')

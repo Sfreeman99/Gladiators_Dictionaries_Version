@@ -52,24 +52,18 @@ def new_gladiator(health, rage, damage_low, damage_high, name):
 
 def dodge_attack(defender):
     # has to be able to dodge 4 times
-    phrases = {
-        'd': 'He is attacking from the left',
-        'a': 'He is attacking from the right',
-        'w': 'He is attacking from below',
-        's': 'He is attacking from above'
-    }
-    pass_amount = 0
-    while pass_amount != 4:
-        choose = random.choice(
-            [phrases['d'], phrases['a'], phrases['w'], phrases['s']])
-        print(choose)
-        decision = phrases[input()]
-        if decision == choose:
-            pass_amount += 1
-            message = 'You dodged the attack!! Get ready for the next one...\n'
-            print(message)
-        else:
-            break
+    if defender['rage'] >= 15:
+        phrases = {
+            'd': 'He is attacking from the left',
+            'a': 'He is attacking from the right',
+            'w': 'He is attacking from below',
+            's': 'He is attacking from above'
+        }
+        return phrases
+    return False
+
+
+def check_dodge_attack(pass_amount, defender):
     if pass_amount == 4:
         defender['dodge'] = True
         message = 'You Successfully dodged all four attacks'
@@ -77,11 +71,6 @@ def dodge_attack(defender):
         defender['dodge'] = False
         message = 'You did not dodge!! You lose'
     return message
-
-    # if the attacker misses its plus one
-    #if he doesnt miss its minus one
-    # has to get atleast 4 dodges for attack to miss
-    # has 6 chances
 
 
 def super_heal(gladiator):

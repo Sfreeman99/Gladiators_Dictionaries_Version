@@ -204,3 +204,55 @@ def test_checking_of_super_heal():
     end = 20
     core.check_superheal(passkey, password, start, end, gladiator)
     assert gladiator['health'] == 50
+    gladiator = {
+        'health': 60,
+        'rage': 100,
+        'damage low': 20,
+        'damage high': 20
+    }
+    password = 'This is super heal'
+    passkey = 'This is super heal'
+    start = 10
+    end = 20
+    core.check_superheal(passkey, password, start, end, gladiator)
+    assert gladiator['health'] == 90
+    assert gladiator['rage'] == 70
+    gladiator = {
+        'health': 80,
+        'rage': 100,
+        'damage low': 20,
+        'damage high': 20
+    }
+    password = 'This is super heal'
+    passkey = 'This is super heal'
+    start = 10
+    end = 20
+    core.check_superheal(passkey, password, start, end, gladiator)
+    assert gladiator['health'] == 100
+
+
+def test_dodge_attack():
+    defender = {'health': 60, 'rage': 100, 'damage low': 20, 'damage high': 20}
+    phrases = {
+        'd': 'He is attacking from the left',
+        'a': 'He is attacking from the right',
+        'w': 'He is attacking from below',
+        's': 'He is attacking from above'
+    }
+    assert core.dodge_attack(defender) == phrases
+    defender = {'health': 60, 'rage': 14, 'damage low': 20, 'damage high': 20}
+    assert core.dodge_attack(defender) == False
+
+
+def test_check_dodge():
+    defender = {'health': 60, 'rage': 100, 'damage low': 20, 'damage high': 20}
+    pass_amount = 3
+    assert core.check_dodge_attack(pass_amount,
+                                   defender) == 'You did not dodge!! You lose'
+
+    assert defender['dodge'] == False
+    pass_amount = 4
+    assert core.check_dodge_attack(
+        pass_amount, defender) == 'You Successfully dodged all four attacks'
+
+    assert defender['dodge'] == True
