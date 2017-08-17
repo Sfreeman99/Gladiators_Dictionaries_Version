@@ -65,9 +65,11 @@ def dodge_attack(defender):
 
 def check_dodge_attack(pass_amount, defender):
     if pass_amount == 4:
+        defender['rage'] -= 15
         defender['dodge'] = True
         message = 'You Successfully dodged all four attacks'
     else:
+        defender['rage'] -= 15
         defender['dodge'] = False
         message = 'You did not dodge!! You lose'
     return message
