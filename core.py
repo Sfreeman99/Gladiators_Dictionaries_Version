@@ -105,6 +105,3 @@ def check_superheal(passkey, password, start, end, gladiator):
         gladiator['rage'] -= 30
         message = 'You lost 10 Health'
     return message
-
-def give_up(attacker, defender):
-    
