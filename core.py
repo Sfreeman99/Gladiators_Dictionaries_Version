@@ -66,13 +66,13 @@ def dodge_attack(defender):
 def check_dodge_attack(pass_amount, defender):
     if pass_amount == 4:
         defender['rage'] -= 15
-        defender['dodge'] = True
         message = 'You Successfully dodged all four attacks'
+        dodged = True
     else:
         defender['rage'] -= 15
-        defender['dodge'] = False
         message = 'You did not dodge!! You lose'
-    return message
+        dodged = False
+    return message, dodged
 
 
 def super_heal(gladiator):
@@ -105,3 +105,6 @@ def check_superheal(passkey, password, start, end, gladiator):
         gladiator['rage'] -= 30
         message = 'You lost 10 Health'
     return message
+
+def give_up(attacker, defender):
+    

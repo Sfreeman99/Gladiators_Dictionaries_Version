@@ -247,14 +247,13 @@ def test_dodge_attack():
 def test_check_dodge():
     defender = {'health': 60, 'rage': 100, 'damage low': 20, 'damage high': 20}
     pass_amount = 3
-    assert core.check_dodge_attack(pass_amount,
-                                   defender) == 'You did not dodge!! You lose'
+    assert core.check_dodge_attack(
+        pass_amount, defender) == ('You did not dodge!! You lose', False)
 
-    assert defender['dodge'] == False
     assert defender['rage'] == 85
     pass_amount = 4
     assert core.check_dodge_attack(
-        pass_amount, defender) == 'You Successfully dodged all four attacks'
+        pass_amount, defender) == ('You Successfully dodged all four attacks',
+                                   True)
 
-    assert defender['dodge'] == True
     assert defender['rage'] == 70
